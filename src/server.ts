@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
@@ -19,7 +20,7 @@ type StartOptions = {
 
 export function useServer({ port, name }: ServerProps) {
   const app = express();
-  const { logger } = useLogger({ context: 'server' });
+  const logger = useLogger({ context: 'server' });
 
   function setup() {
     app.use(cors());

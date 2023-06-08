@@ -18,7 +18,7 @@ export const AppDataSource = new DataSource({
 });
 
 export function initializeDataSource() {
-  const { logger } = useLogger({ context: 'data-source' });
+  const logger = useLogger({ context: 'data-source' });
   try {
     AppDataSource.initialize();
     logger.info('Data source initialized');

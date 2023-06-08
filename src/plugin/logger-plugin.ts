@@ -31,7 +31,5 @@ type LoggerProps = {
 export function useLogger({ level = 'debug', context = 'default' }: LoggerProps = {}) {
   const logger = log4js.getLogger(context);
   logger.level = level;
-  return {
-    logger,
-  };
+  return logger;
 }

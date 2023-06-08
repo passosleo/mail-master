@@ -7,7 +7,7 @@ export async function errorMiddleware(
   res: Response,
   next: NextFunction,
 ) {
-  const { logger } = useLogger({ context: 'error-handler' });
+  const logger = useLogger({ context: 'error-handler' });
 
   logger.error({
     method: req.method,
