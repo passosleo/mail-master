@@ -25,7 +25,7 @@ export function validate(target: ValidateProps | ValidateProps[]) {
     }
 
     if (errors.length) {
-      return res.status(400).json({ errors });
+      return res.status(400).json({ success: false, error: errors });
     }
 
     next();
