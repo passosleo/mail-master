@@ -1,7 +1,9 @@
-import { StatusCodes } from 'http-status-codes';
-
-export type DefaultResponse = {
-  status: StatusCodes;
-  message: string;
-  data?: any;
-};
+export type ServiceResult<T = any> =
+  | {
+      success: true;
+      data?: T;
+    }
+  | {
+      success: false;
+      error: string;
+    };

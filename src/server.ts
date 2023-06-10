@@ -6,7 +6,7 @@ import swaggerDoc from '../swagger.json';
 import cors from 'cors';
 import { configureRoutes } from './router';
 import { useLogger } from './plugin/logger-plugin';
-import { errorMiddleware } from './middleware/error-middleware';
+import { errorMiddleware } from './middlewares/error-middleware';
 import { initializeDataSource } from './repository/data-source';
 
 type ServerProps = {

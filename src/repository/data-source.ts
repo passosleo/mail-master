@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { useLogger } from '../plugin/logger-plugin';
-import { User } from '../model/user';
+import { User } from '../entities/user';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -23,7 +23,10 @@ export function initializeDataSource() {
     AppDataSource.initialize();
     logger.info('Data source initialized');
   } catch (error) {
-    logger.error('Oops! Something went wrong while initializing data source', error);
+    logger.error(
+      'Oops! Something went wrong while initializing data source',
+      error,
+    );
     process.exit(1);
   }
 }

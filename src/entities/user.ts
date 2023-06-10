@@ -3,13 +3,16 @@ import { BaseEntity } from './base';
 
 @Entity({ name: 'user' })
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid', { name: 'userId', primaryKeyConstraintName: 'PK_user_userId' })
+  @PrimaryGeneratedColumn('uuid', {
+    name: 'userId',
+    primaryKeyConstraintName: 'PK_user_userId',
+  })
   userId: string;
 
   @Column({ name: 'name', type: 'varchar', length: 100 })
   name: string;
 
-  @Column({ name: 'email', type: 'varchar', length: 100 })
+  @Column({ name: 'email', type: 'varchar', unique: true, length: 100 })
   email: string;
 
   @Column({ name: 'emailVerified', type: 'bool', default: false })

@@ -1,6 +1,6 @@
 import { Express } from 'express';
-import { healthRoutes } from './health-routes';
+import { userRoutes } from './user-routes';
 
 export function configureRoutes(app: Express) {
-  app.use('/health', healthRoutes);
+  app.use('/user', userRoutes);
 }
