@@ -4,10 +4,10 @@ import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDoc from '../swagger.json';
 import cors from 'cors';
-import { configureRoutes } from './router';
-import { useLogger } from './plugin/logger-plugin';
+import { configureRoutes } from './routes';
+import { useLogger } from './plugins/logger-plugin';
 import { errorMiddleware } from './middlewares/error-middleware';
-import { initializeDataSource } from './repository/data-source';
+import { initializeDataSource } from './repositories/data-source';
 
 type ServerProps = {
   port?: number;

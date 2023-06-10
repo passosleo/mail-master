@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { useLogger } from '../plugin/logger-plugin';
+import { useLogger } from '../plugins/logger-plugin';
 import { StatusCodes } from 'http-status-codes';
 
 export async function errorMiddleware(

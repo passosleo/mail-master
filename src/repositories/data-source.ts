@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-import { useLogger } from '../plugin/logger-plugin';
+import { useLogger } from '../plugins/logger-plugin';
 import { User } from '../entities/user';
 
 export const AppDataSource = new DataSource({

@@ -1,6 +1,6 @@
 import { ServiceResult } from '../@types/generic';
 import { CreateUserDTO, DeleteUserDTO, UpdateUserDTO } from '../dtos/user';
-import { useUserRepository } from '../repository/user-repository';
+import { useUserRepository } from '../repositories/user-repository';
 
 export function useUserService() {
   const userRepository = useUserRepository();

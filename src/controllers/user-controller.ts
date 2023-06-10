@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import { CreateUserDTO, DeleteUserDTO, UpdateUserDTO } from '../dtos/user';
-import { useUserService } from '../service/user-service';
+import { useUserService } from '../services/user-service';
 import { Request, Response, NextFunction } from 'express';
 
 export function useUserController() {
