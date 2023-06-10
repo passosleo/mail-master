@@ -11,6 +11,6 @@ export type UpdateUserDTO = {
   password?: string;
 };
 
-export type DeleteUserDTO = {
+export type SearchUserDTO = {
   userId: string;
 };

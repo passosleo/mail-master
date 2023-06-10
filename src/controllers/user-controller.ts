@@ -1,10 +1,34 @@
 import { StatusCodes } from 'http-status-codes';
-import { CreateUserDTO, DeleteUserDTO, UpdateUserDTO } from '../dtos/user';
+import { CreateUserDTO, SearchUserDTO, UpdateUserDTO } from '../dtos/user';
 import { useUserService } from '../services/user-service';
 import { Request, Response, NextFunction } from 'express';
 
 export function useUserController() {
   const service = useUserService();
+
+  async function getUsers(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await service.getUsers();
+
+      return res.status(StatusCodes.OK).json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async function getUserById(req: Request, res: Response, next: NextFunction) {
+    const { userId } = req.params as SearchUserDTO;
+    try {
+      const result = await service.getUserById({ userId });
+
+      if (!result.success)
+        return res.status(StatusCodes.NOT_FOUND).json(result);
+
+      return res.status(StatusCodes.OK).json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
 
   async function createUser(req: Request, res: Response, next: NextFunction) {
     const user: CreateUserDTO = req.body;
@@ -20,9 +44,10 @@ export function useUserController() {
   }
 
   async function updateUser(req: Request, res: Response, next: NextFunction) {
+    const { userId } = req.params as SearchUserDTO;
     const user: UpdateUserDTO = req.body;
     try {
-      const result = await service.updateUser(user);
+      const result = await service.updateUser(userId, user);
 
       if (!result.success)
         return res.status(StatusCodes.BAD_REQUEST).json(result);
@@ -34,7 +59,7 @@ export function useUserController() {
   }
 
   async function deleteUser(req: Request, res: Response, next: NextFunction) {
-    const { userId } = req.params as DeleteUserDTO;
+    const { userId } = req.params as SearchUserDTO;
     try {
       const result = await service.deleteUser({ userId });
 
@@ -48,6 +73,8 @@ export function useUserController() {
   }
 
   return {
+    getUsers,
+    getUserById,
     createUser,
     updateUser,
     deleteUser,

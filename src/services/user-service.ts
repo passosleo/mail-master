@@ -1,5 +1,5 @@
 import { ServiceResult } from '../@types/generic';
-import { CreateUserDTO, DeleteUserDTO, UpdateUserDTO } from '../dtos/user';
+import { CreateUserDTO, SearchUserDTO, UpdateUserDTO } from '../dtos/user';
 import { useUserRepository } from '../repositories/user-repository';
 
 export function useUserService() {
@@ -9,6 +9,25 @@ export function useUserService() {
     const user = await userRepository.findOneBy({ email });
 
     return user ? user.userId : false;
+  }
+
+  async function getUsers(): Promise<ServiceResult> {
+    const users = await userRepository.findAll();
+
+    return {
+      success: true,
+      data: users,
+    };
+  }
+
+  async function getUserById({
+    userId,
+  }: SearchUserDTO): Promise<ServiceResult> {
+    const user = await userRepository.findOneBy({ userId });
+
+    return user
+      ? { success: true, data: user }
+      : { success: false, error: 'User not found' };
   }
 
   async function createUser({
@@ -31,12 +50,10 @@ export function useUserService() {
     };
   }
 
-  async function updateUser({
-    userId,
-    name,
-    email,
-    password,
-  }: UpdateUserDTO): Promise<ServiceResult> {
+  async function updateUser(
+    userId: string,
+    { name, email, password }: UpdateUserDTO,
+  ): Promise<ServiceResult> {
     const foundUserId = email ? await isEmailInUse(email) : false;
 
     if (foundUserId && foundUserId !== userId) {
@@ -58,7 +75,7 @@ export function useUserService() {
       : { success: false, error: 'User not found' };
   }
 
-  async function deleteUser({ userId }: DeleteUserDTO): Promise<ServiceResult> {
+  async function deleteUser({ userId }: SearchUserDTO): Promise<ServiceResult> {
     const { affected } = await userRepository.remove({ userId });
 
     const isDeleted = !!affected;
@@ -69,6 +86,8 @@ export function useUserService() {
   }
 
   return {
+    getUsers,
+    getUserById,
     createUser,
     updateUser,
     deleteUser,

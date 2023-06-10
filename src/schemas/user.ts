@@ -8,13 +8,12 @@ export const createUserSchema = Joi.object<User>({
 });
 
 export const updateUserSchema = Joi.object<User>({
-  userId: Joi.string().uuid().required(),
   name: Joi.string().optional().min(3).max(100),
   email: Joi.string().email().optional().max(100),
   password: Joi.string().optional(),
 });
 
-export const deleteUserSchema = Joi.object<User>({
+export const searchUserSchema = Joi.object<User>({
   userId: Joi.string().uuid().required(),
 });
 
