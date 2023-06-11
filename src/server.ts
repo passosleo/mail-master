@@ -28,7 +28,7 @@ export function useServer({ port, name }: ServerProps) {
     app.use(express.urlencoded({ extended: false }));
     app.use(morgan('dev'));
     app.use(
-      '/docs',
+      '/api/v1/docs',
       swaggerUi.serve,
       swaggerUi.setup(swaggerDoc, {
         swaggerOptions: {
@@ -46,7 +46,10 @@ export function useServer({ port, name }: ServerProps) {
     if (autoSetup) setup();
     app.listen(port ?? process.env.PORT ?? 3000, () => {
       logger.info(`Server ${name ?? ''} is running on port ${port}`);
-      if (autoSetup) logger.info(`Swagger available at /docs`);
+      if (autoSetup)
+        logger.info(
+          `Swagger available at http://127.0.0.1:${port}/api/v1/docs`,
+        );
     });
   }
 
