@@ -2,6 +2,9 @@ export type CreateUserDTO = {
   name: string;
   email: string;
   password: string;
+  emailVerified?: boolean;
+  role?: UserRolesDTO;
+  isEnabled?: boolean;
 };
 
 export type UpdateUserDTO = {
@@ -9,8 +12,13 @@ export type UpdateUserDTO = {
   name?: string;
   email?: string;
   password?: string;
+  emailVerified?: boolean;
+  role?: UserRolesDTO;
+  isEnabled?: boolean;
 };
 
 export type SearchUserDTO = {
   userId: string;
 };
+
+export type UserRolesDTO = 'admin' | 'user';

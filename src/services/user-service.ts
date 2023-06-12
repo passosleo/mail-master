@@ -30,19 +30,15 @@ export function useUserService() {
       : { success: false, error: 'User not found' };
   }
 
-  async function createUser({
-    email,
-    name,
-    password,
-  }: CreateUserDTO): Promise<ServiceResult> {
-    if (await isEmailInUse(email)) {
+  async function createUser(userData: CreateUserDTO): Promise<ServiceResult> {
+    if (await isEmailInUse(userData.email)) {
       return {
         success: false,
         error: 'User already exists with same email',
       };
     }
 
-    const user = await userRepository.create({ email, name, password });
+    const user = await userRepository.create(userData);
 
     return {
       success: true,
@@ -52,9 +48,11 @@ export function useUserService() {
 
   async function updateUser(
     userId: string,
-    { name, email, password }: UpdateUserDTO,
+    userData: UpdateUserDTO,
   ): Promise<ServiceResult> {
-    const foundUserId = email ? await isEmailInUse(email) : false;
+    const foundUserId = userData.email
+      ? await isEmailInUse(userData.email)
+      : false;
 
     if (foundUserId && foundUserId !== userId) {
       return {
@@ -63,10 +61,7 @@ export function useUserService() {
       };
     }
 
-    const { affected } = await userRepository.update(
-      { userId },
-      { name, email, password },
-    );
+    const { affected } = await userRepository.update({ userId }, userData);
 
     const isUpdated = !!affected;
 

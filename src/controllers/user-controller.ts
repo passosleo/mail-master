@@ -22,7 +22,7 @@ export function useUserController() {
       const result = await service.getUserById({ userId });
 
       if (!result.success)
-        return res.status(StatusCodes.NOT_FOUND).json(result);
+        return res.status(StatusCodes.BAD_REQUEST).json(result);
 
       return res.status(StatusCodes.OK).json(result);
     } catch (error) {
@@ -35,7 +35,8 @@ export function useUserController() {
     try {
       const result = await service.createUser(user);
 
-      if (!result.success) return res.status(StatusCodes.CONFLICT).json(result);
+      if (!result.success)
+        return res.status(StatusCodes.BAD_REQUEST).json(result);
 
       return res.status(StatusCodes.CREATED).json(result);
     } catch (error) {
