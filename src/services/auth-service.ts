@@ -51,6 +51,7 @@ export function useAuthService() {
     return {
       success: true,
       data: {
+        type: 'Bearer',
         token,
       },
     };

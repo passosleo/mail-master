@@ -33,7 +33,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       },
       "post": {
         "tags": ["Users"],
@@ -80,7 +85,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       }
     },
     "/user/{userId}": {
@@ -130,7 +140,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       },
       "put": {
         "tags": ["Users"],
@@ -189,7 +204,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       },
       "delete": {
         "tags": ["Users"],
@@ -237,7 +257,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       }
     },
     "/auth": {
@@ -287,6 +312,10 @@
       "Token": {
         "type": "object",
         "properties": {
+          "type": {
+            "type": "string",
+            "example": "Bearer"
+          },
           "token": {
             "type": "string"
           }
@@ -369,6 +398,13 @@
             ]
           }
         }
+      }
+    },
+    "securitySchemes": {
+      "Authorization": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }

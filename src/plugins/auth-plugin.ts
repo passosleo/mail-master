@@ -15,9 +15,7 @@ export function useAuth() {
     return token;
   }
 
-  async function verifyToken<T extends string | object | Buffer>(
-    token: string,
-  ) {
+  async function verifyToken<T>(token: string): Promise<T> {
     const decoded = jwt.verify(token, process.env.JWT_SECRET as Secret) as T;
 
     return decoded;
