@@ -19,8 +19,7 @@ export function useUserService() {
 
     return {
       success: true,
-      data: users,
-      // data: users.map((user) => _.omit(user, ['password'])),
+      data: users.map((user) => _.omit(user, ['password'])),
     };
   }
 
@@ -70,6 +69,12 @@ export function useUserService() {
         success: false,
         error: 'User already exists with same email',
       };
+    }
+
+    if (userData.password) {
+      userData.password = await helpers.password.hashPassword(
+        userData.password,
+      );
     }
 
     const { affected } = await userRepository.update({ userId }, userData);

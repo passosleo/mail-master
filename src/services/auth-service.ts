@@ -1,10 +1,13 @@
+import _ from 'lodash';
 import { ServiceResult } from '../@types/generic';
 import { AuthDTO } from '../dtos/auth';
 import { useHelpers } from '../helpers/helpers';
+import { useAuth } from '../plugins/auth-plugin';
 import { useUserRepository } from '../repositories/user-repository';
 
 export function useAuthService() {
   const userRepository = useUserRepository();
+  const auth = useAuth();
   const helpers = useHelpers();
 
   async function authenticate({
@@ -41,8 +44,15 @@ export function useAuthService() {
       };
     }
 
+    const token = await auth.generateToken({
+      payload: { user: _.omit(user, ['password']) },
+    });
+
     return {
       success: true,
+      data: {
+        token,
+      },
     };
   }
 

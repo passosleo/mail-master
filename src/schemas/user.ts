@@ -6,7 +6,7 @@ export const createUserSchema = Joi.object<User>({
   email: Joi.string().email().required().max(100),
   password: Joi.string().required(),
   emailVerified: Joi.boolean().optional(),
-  role: Joi.string().optional().max(100),
+  role: Joi.string().equal('user').equal('admin').optional().max(100),
   isEnabled: Joi.boolean().optional(),
 });
 
@@ -15,7 +15,7 @@ export const updateUserSchema = Joi.object<User>({
   email: Joi.string().email().optional().max(100),
   password: Joi.string().optional(),
   emailVerified: Joi.boolean().optional(),
-  role: Joi.string().optional().max(100),
+  role: Joi.string().equal('user').equal('admin').optional().max(100),
   isEnabled: Joi.boolean().optional(),
 });
 
