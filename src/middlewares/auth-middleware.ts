@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { useAuth } from '../plugins/auth-plugin';
-import { UserDTO } from '../data/dtos/user';
+import { TokenDTO } from '../data/dtos/auth';
+import { UserRolesDTO } from '../data/dtos/user';
 
-export function authenticate() {
+export function authenticate({ roles }: { roles: UserRolesDTO[] }) {
   return async (req: Request, res: Response, next: NextFunction) => {
     const { authorization } = req.headers;
 
@@ -18,7 +19,9 @@ export function authenticate() {
     const token = authorization.split(' ')[1];
 
     try {
-      const user = await auth.verifyToken<UserDTO>(token);
+      const { user } = await auth.verifyToken<TokenDTO>(token);
+
+      if (!roles.includes(user.role)) throw new Error('Invalid role');
 
       req.user = user;
 
