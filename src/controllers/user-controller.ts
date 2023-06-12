@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
-import { CreateUserDTO, SearchUserDTO, UpdateUserDTO } from '../dtos/user';
+import { CreateUserDTO, SearchUserDTO, UpdateUserDTO } from '../data/dtos/user';
 import { useUserService } from '../services/user-service';
 import { Request, Response, NextFunction } from 'express';
 

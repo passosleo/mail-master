@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import { ServiceResult } from '../@types/generic';
-import { AuthDTO } from '../dtos/auth';
+import { AuthDTO } from '../data/dtos/auth';
 import { useHelpers } from '../helpers/helpers';
 import { useAuth } from '../plugins/auth-plugin';
-import { useUserRepository } from '../repositories/user-repository';
+import { useUserRepository } from '../data/repositories/user-repository';
 
 export function useAuthService() {
   const userRepository = useUserRepository();

@@ -5,7 +5,7 @@ import {
   createUserSchema,
   searchUserSchema,
   updateUserSchema,
-} from '../schemas/user';
+} from '../data/schemas/user';
 
 const router = express.Router();
 const controller = useUserController();

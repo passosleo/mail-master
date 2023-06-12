@@ -1,7 +1,7 @@
 import express from 'express';
 import { validate } from '../middlewares/validate-middleware';
 import { useAuthController } from '../controllers/auth-controller';
-import { authSchema } from '../schemas/auth';
+import { authSchema } from '../data/schemas/auth';
 
 const router = express.Router();
 const controller = useAuthController();

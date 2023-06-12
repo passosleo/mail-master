@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import { Request, Response, NextFunction } from 'express';
 import { useAuthService } from '../services/auth-service';
-import { AuthDTO } from '../dtos/auth';
+import { AuthDTO } from '../data/dtos/auth';
 
 export function useAuthController() {
   const service = useAuthService();

@@ -1,8 +1,9 @@
 import { ServiceResult } from '../@types/generic';
-import { CreateUserDTO, SearchUserDTO, UpdateUserDTO } from '../dtos/user';
+import { CreateUserDTO, SearchUserDTO, UpdateUserDTO } from '../data/dtos/user';
 import { useHelpers } from '../helpers/helpers';
-import { useUserRepository } from '../repositories/user-repository';
+import { useUserRepository } from '../data/repositories/user-repository';
 import _ from 'lodash';
+import { User } from '../data/entities/user';
 
 export function useUserService() {
   const userRepository = useUserRepository();
@@ -19,7 +20,7 @@ export function useUserService() {
 
     return {
       success: true,
-      data: users.map((user) => _.omit(user, ['password'])),
+      data: users.map((user: User) => _.omit(user, ['password'])),
     };
   }
 

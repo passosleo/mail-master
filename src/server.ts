@@ -7,7 +7,7 @@ import cors from 'cors';
 import { configureRoutes } from './routes';
 import { useLogger } from './plugins/logger-plugin';
 import { errorMiddleware } from './middlewares/error-middleware';
-import { initializeDataSource } from './repositories/data-source';
+import { initializeDataSource } from './data/data-source';
 
 type ServerProps = {
   port?: number;
