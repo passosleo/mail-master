@@ -11,8 +11,10 @@
   ],
   "tags": [
     {
-      "name": "Users",
-      "description": "Users management"
+      "name": "Authentication"
+    },
+    {
+      "name": "Users"
     }
   ],
   "paths": {
@@ -237,10 +239,51 @@
           }
         }
       }
+    },
+    "/auth": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Authenticate by given credentials",
+        "requestBody": {
+          "description": "Authentication payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Authentication"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "Authentication": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
       "User": {
         "type": "object",
         "properties": {

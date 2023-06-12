@@ -1,9 +1,12 @@
 import { ServiceResult } from '../@types/generic';
 import { CreateUserDTO, SearchUserDTO, UpdateUserDTO } from '../dtos/user';
+import { useHelpers } from '../helpers/helpers';
 import { useUserRepository } from '../repositories/user-repository';
+import _ from 'lodash';
 
 export function useUserService() {
   const userRepository = useUserRepository();
+  const helpers = useHelpers();
 
   async function isEmailInUse(email: string): Promise<false | string> {
     const user = await userRepository.findOneBy({ email });
@@ -17,6 +20,7 @@ export function useUserService() {
     return {
       success: true,
       data: users,
+      // data: users.map((user) => _.omit(user, ['password'])),
     };
   }
 
@@ -26,7 +30,7 @@ export function useUserService() {
     const user = await userRepository.findOneBy({ userId });
 
     return user
-      ? { success: true, data: user }
+      ? { success: true, data: _.omit(user, ['password']) }
       : { success: false, error: 'User not found' };
   }
 
@@ -38,11 +42,18 @@ export function useUserService() {
       };
     }
 
-    const user = await userRepository.create(userData);
+    const hashedPassword = await helpers.password.hashPassword(
+      userData.password,
+    );
+
+    const user = await userRepository.create({
+      ...userData,
+      password: hashedPassword,
+    });
 
     return {
       success: true,
-      data: user,
+      data: _.omit(user, ['password']),
     };
   }
 
