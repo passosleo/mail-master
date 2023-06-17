@@ -2,9 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { useAuth } from '../plugins/auth-plugin';
 import { TokenDTO } from '../data/dtos/auth';
-import { UserRolesDTO } from '../data/dtos/user';
+import { UserRoles } from '../data/dtos/user';
 
-export function authenticate({ roles }: { roles: UserRolesDTO[] }) {
+export function authenticate({ roles }: { roles: UserRoles[] }) {
   return async (req: Request, res: Response, next: NextFunction) => {
     const { authorization } = req.headers;
 

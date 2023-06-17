@@ -10,15 +10,11 @@ export function useAuth() {
     payload,
     options = { expiresIn: '1d' },
   }: GenerateTokenOptions<T>) {
-    const token = jwt.sign(payload, process.env.JWT_SECRET as Secret, options);
-
-    return token;
+    return jwt.sign(payload, process.env.JWT_SECRET as Secret, options);
   }
 
   async function verifyToken<T>(token: string): Promise<T> {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as Secret) as T;
-
-    return decoded;
+    return jwt.verify(token, process.env.JWT_SECRET as Secret) as T;
   }
 
   return {

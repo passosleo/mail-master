@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { BaseEntity } from './base';
-import { UserRolesDTO } from '../dtos/user';
+import { UserRoles } from '../dtos/user';
 
 @Entity({ name: 'user' })
 export class User extends BaseEntity {
@@ -23,5 +23,5 @@ export class User extends BaseEntity {
   password: string | null;
 
   @Column({ name: 'role', type: 'varchar', length: 100, default: 'user' })
-  role: UserRolesDTO;
+  role: UserRoles;
 }
