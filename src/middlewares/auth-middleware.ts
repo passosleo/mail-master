@@ -21,7 +21,8 @@ export function authenticate({ roles }: { roles: UserRoles[] }) {
     try {
       const { user } = await auth.verifyToken<TokenDTO>(token);
 
-      if (!roles.includes(user.role)) throw new Error('Invalid role');
+      if (!roles.includes(user.role) && user.role !== 'admin')
+        throw new Error('Invalid role');
 
       req.user = user;
 

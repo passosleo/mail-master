@@ -28,8 +28,4 @@ export type UpdateUserDTO = {
   isEnabled?: boolean;
 };
 
-export type SearchUserDTO = {
-  userId: string;
-};
-
 export type UserRoles = 'admin' | 'user';

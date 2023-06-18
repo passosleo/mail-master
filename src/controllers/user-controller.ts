@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
-import { CreateUserDTO, SearchUserDTO, UpdateUserDTO } from '../data/dtos/user';
+import { CreateUserDTO, UpdateUserDTO } from '../data/dtos/user';
 import { useUserService } from '../services/user-service';
 import { Request, Response, NextFunction } from 'express';
 
@@ -17,9 +17,9 @@ export function useUserController() {
   }
 
   async function getUserById(req: Request, res: Response, next: NextFunction) {
-    const { userId } = req.params as SearchUserDTO;
+    const { userId } = req.params;
     try {
-      const result = await service.getUserById({ userId });
+      const result = await service.getUserById(userId);
 
       if (!result.success)
         return res.status(StatusCodes.BAD_REQUEST).json(result);
@@ -45,7 +45,7 @@ export function useUserController() {
   }
 
   async function updateUser(req: Request, res: Response, next: NextFunction) {
-    const { userId } = req.params as SearchUserDTO;
+    const { userId } = req.params;
     const user: UpdateUserDTO = req.body;
     try {
       const result = await service.updateUser(userId, user);
@@ -60,9 +60,9 @@ export function useUserController() {
   }
 
   async function deleteUser(req: Request, res: Response, next: NextFunction) {
-    const { userId } = req.params as SearchUserDTO;
+    const { userId } = req.params;
     try {
-      const result = await service.deleteUser({ userId });
+      const result = await service.deleteUser(userId);
 
       if (!result.success)
         return res.status(StatusCodes.BAD_REQUEST).json(result);

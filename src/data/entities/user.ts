@@ -5,8 +5,8 @@ import { UserRoles } from '../dtos/user';
 @Entity({ name: 'user' })
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
-    name: 'userId',
-    primaryKeyConstraintName: 'PK_user_userId',
+    name: 'user_id',
+    primaryKeyConstraintName: 'PK_user_id',
   })
   userId: string;
 
@@ -16,7 +16,7 @@ export class User extends BaseEntity {
   @Column({ name: 'email', type: 'varchar', unique: true, length: 100 })
   email: string;
 
-  @Column({ name: 'emailVerified', type: 'bool', default: false })
+  @Column({ name: 'email_verified', type: 'bool', default: false })
   emailVerified: boolean;
 
   @Column({ name: 'password', type: 'varchar', length: 250, nullable: true })

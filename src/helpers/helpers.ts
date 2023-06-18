@@ -1,5 +1,6 @@
 import { useDateHelper } from './date';
 import { useEncryptionHelper } from './encryption';
+import { useFileHelper } from './file';
 import { useNumberHelper } from './number';
 import { usePasswordHelper } from './password';
 import { useStringHelper } from './string';
@@ -11,5 +12,6 @@ export function useHelpers() {
     number: useNumberHelper(),
     password: usePasswordHelper(),
     string: useStringHelper(),
+    file: useFileHelper(),
   };
 }

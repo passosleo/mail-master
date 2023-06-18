@@ -1,5 +1,5 @@
 import { ServiceResult } from '../@types/generic';
-import { CreateUserDTO, SearchUserDTO, UpdateUserDTO } from '../data/dtos/user';
+import { CreateUserDTO,  UpdateUserDTO } from '../data/dtos/user';
 import { useHelpers } from '../helpers/helpers';
 import { useUserRepository } from '../data/repositories/user-repository';
 import _ from 'lodash';
@@ -24,9 +24,7 @@ export function useUserService() {
     };
   }
 
-  async function getUserById({
-    userId,
-  }: SearchUserDTO): Promise<ServiceResult> {
+  async function getUserById(userId: string): Promise<ServiceResult> {
     const user = await userRepository.findOneBy({ userId });
 
     return user
@@ -87,7 +85,7 @@ export function useUserService() {
       : { success: false, error: 'User not found' };
   }
 
-  async function deleteUser({ userId }: SearchUserDTO): Promise<ServiceResult> {
+  async function deleteUser(userId:string): Promise<ServiceResult> {
     const { affected } = await userRepository.remove({ userId });
 
     const isDeleted = !!affected;

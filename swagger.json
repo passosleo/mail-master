@@ -15,6 +15,9 @@
     },
     {
       "name": "Users"
+    },
+    {
+      "name": "Mail Template"
     }
   ],
   "paths": {
@@ -290,8 +293,100 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
+      }
+    },
+    "/mail-template/{name}": {
+      "post": {
+        "tags": ["Mail Template"],
+        "summary": "Submit new mail template",
+
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "description": "Name of the template",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Mail template payload",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["template"],
+                "properties": {
+                  "template": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       }
     }
   },
@@ -349,6 +444,16 @@
           }
         }
       },
+      "MailTemplate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 100
+          }
+        }
+      },
       "SuccessResponse": {
         "type": "object",
         "properties": {
@@ -364,8 +469,17 @@
               {
                 "type": "array",
                 "items": {
+                  "$ref": "#/components/schemas/MailTemplate"
+                }
+              },
+              {
+                "type": "array",
+                "items": {
                   "$ref": "#/components/schemas/User"
                 }
+              },
+              {
+                "$ref": "#/components/schemas/MailTemplate"
               },
               {
                 "$ref": "#/components/schemas/User"
