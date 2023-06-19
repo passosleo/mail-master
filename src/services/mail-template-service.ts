@@ -1,5 +1,8 @@
 import { ServiceResult } from '../@types/generic';
-import { CreateMailTemplateDTO } from '../data/dtos/mail-template';
+import {
+  CreateMailTemplateDTO,
+  UpdateMailTemplateDTO,
+} from '../data/dtos/mail-template';
 import { useMailTemplateRepository } from '../data/repositories/mail-template-repository';
 import { useHelpers } from '../helpers/helpers';
 
@@ -37,7 +40,81 @@ export function useMailTemplateService() {
     };
   }
 
+  async function updateMailTemplate(
+    templateId: string,
+    { file, name, userId }: UpdateMailTemplateDTO,
+  ): Promise<ServiceResult> {
+    const [template, nameExists] = await Promise.all([
+      mailTemplateRepository.findOneBy({ templateId }),
+      mailTemplateRepository.findOneBy({ name }),
+    ]);
+
+    if (!template) {
+      if (file) helpers.file.removeFile(file.path);
+      return {
+        success: false,
+        error: 'Template not found',
+      };
+    }
+
+    if (name && nameExists && nameExists.templateId !== templateId) {
+      if (file) helpers.file.removeFile(file.path);
+      return {
+        success: false,
+        error: 'Template name already exists',
+      };
+    }
+
+    const templateData = {
+      name: name ? name : template.name,
+      updatedBy: userId,
+    };
+
+    const { affected: isUpdated } = await mailTemplateRepository.update(
+      { templateId },
+      templateData,
+    );
+
+    if (file && !!isUpdated) {
+      const oldFilepath = `uploads/templates/` + template.file;
+      helpers.file.removeFile(oldFilepath);
+      helpers.file.renameFile(file.path, oldFilepath);
+    }
+
+    return {
+      success: true,
+    };
+  }
+
+  async function deleteMailTemplate(
+    templateId: string,
+  ): Promise<ServiceResult> {
+    const template = await mailTemplateRepository.findOneBy({ templateId });
+
+    if (!template) {
+      return {
+        success: false,
+        error: 'Template not found',
+      };
+    }
+
+    const { affected } = await mailTemplateRepository.remove({ templateId });
+
+    const isDeleted = !!affected;
+
+    if (isDeleted) {
+      const oldFilepath = `uploads/templates/` + template.file;
+      helpers.file.removeFile(oldFilepath);
+    }
+
+    return {
+      success: true,
+    };
+  }
+
   return {
     createMailTemplate,
+    updateMailTemplate,
+    deleteMailTemplate,
   };
 }

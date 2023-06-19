@@ -8,7 +8,7 @@ type GenerateTokenOptions<T extends string | object | Buffer> = {
 export function useAuth() {
   async function generateToken<T extends string | object | Buffer>({
     payload,
-    options = { expiresIn: '1d' },
+    options = { expiresIn: '7d' },
   }: GenerateTokenOptions<T>) {
     return jwt.sign(payload, process.env.JWT_SECRET as Secret, options);
   }

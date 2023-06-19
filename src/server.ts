@@ -22,61 +22,30 @@ export function useServer({ port, name }: ServerProps) {
   const app = express();
   const logger = useLogger({ context: 'server' });
 
-  function setup({
-    enableCors = true,
-    enableJson = true,
-    enableUrlEncoded = true,
-    enableMorgan = true,
-    enableSwagger = true,
-    enableStatic = true,
-    enableRoutes = true,
-    middlewares = [],
-    extra = [() => null],
-  }: {
-    enableCors?: boolean;
-    enableJson?: boolean;
-    enableUrlEncoded?: boolean;
-    enableMorgan?: boolean;
-    enableSwagger?: boolean;
-    enableStatic?: boolean;
-    enableRoutes?: boolean;
-    middlewares?: any[];
-    extra?: [() => void];
-  }) {
-    if (enableCors) app.use(cors());
+  function setup() {
+    app.use(cors());
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: false }));
+    app.use(morgan('dev'));
 
-    if (enableJson) app.use(express.json());
-
-    if (enableUrlEncoded) app.use(express.urlencoded({ extended: false }));
-
-    if (enableMorgan) app.use(morgan('dev'));
-
-    if (enableSwagger)
-      app.use(
-        '/api/v1/docs',
-        swaggerUi.serve,
-        swaggerUi.setup(swaggerDoc, {
-          swaggerOptions: {
-            url: '/swagger.json',
-          },
-        }),
-      );
-
-    if (enableStatic) app.use(express.static('public'));
-
-    if (enableRoutes) configureRoutes(app);
-
-    middlewares.forEach((middleware) => app.use(middleware));
-
-    extra.forEach((extra) => extra());
+    app.use(
+      '/api/v1/docs',
+      swaggerUi.serve,
+      swaggerUi.setup(swaggerDoc, {
+        swaggerOptions: {
+          url: '/swagger.json',
+        },
+      }),
+    );
+    app.use(express.static('public'));
+    configureRoutes(app);
+    app.use(errorMiddleware);
+    initializeDataSource();
   }
 
   function start({ autoSetup = true }: StartOptions = {}) {
     if (autoSetup) {
-      setup({
-        middlewares: [errorMiddleware],
-        extra: [() => initializeDataSource()],
-      });
+      setup();
     }
 
     app.listen(port ?? process.env.PORT ?? 3000, () => {

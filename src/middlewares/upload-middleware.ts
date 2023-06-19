@@ -4,7 +4,7 @@ import multer from 'multer';
 import mime from 'mime';
 import { v4 as uuid } from 'uuid';
 
-export type UploadOptions = {
+type UploadOptions = {
   mimeType: string;
   dest: string;
   fieldName: string;

@@ -5,7 +5,12 @@ export function useFileHelper() {
     fs.unlinkSync(path);
   }
 
+  function renameFile(oldPath: string, newPath: string) {
+    fs.renameSync(oldPath, newPath);
+  }
+
   return {
     removeFile,
+    renameFile,
   };
 }
