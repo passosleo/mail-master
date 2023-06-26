@@ -317,6 +317,29 @@
         }
       }
     },
+    "/mail-template": {
+      "get": {
+        "tags": ["Mail Template"],
+        "summary": "Get all mail templates",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
     "/mail-template/{name}": {
       "post": {
         "tags": ["Mail Template"],

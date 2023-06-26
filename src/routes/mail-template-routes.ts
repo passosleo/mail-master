@@ -11,6 +11,11 @@ import {
 const router = express.Router();
 const controller = useMailTemplateController();
 
+router.get(
+  '/',
+  controller.getMailTemplates,
+);
+
 router.post(
   '/:name',
   validate({

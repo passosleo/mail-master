@@ -10,6 +10,18 @@ export function useMailTemplateService() {
   const mailTemplateRepository = useMailTemplateRepository();
   const helpers = useHelpers();
 
+  async function getMailTemplates(): Promise<ServiceResult> {
+    const templates = await mailTemplateRepository.findAll();
+
+    return {
+      success: true,
+      data: templates.map((template) => ({
+        ...template,
+        file: 'http://localhost:3000/uploads/templates/' + template.file,
+      })),
+    };
+  }
+
   async function createMailTemplate({
     file,
     name,
@@ -113,6 +125,7 @@ export function useMailTemplateService() {
   }
 
   return {
+    getMailTemplates,
     createMailTemplate,
     updateMailTemplate,
     deleteMailTemplate,

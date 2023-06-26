@@ -5,6 +5,20 @@ import { useMailTemplateService } from '../services/mail-template-service';
 export function useMailTemplateController() {
   const service = useMailTemplateService();
 
+  async function getMailTemplates(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const result = await service.getMailTemplates();
+
+      return res.status(StatusCodes.OK).json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async function createMailTemplate(
     req: Request,
     res: Response,
@@ -73,6 +87,7 @@ export function useMailTemplateController() {
   }
 
   return {
+    getMailTemplates,
     createMailTemplate,
     updateMailTemplate,
     deleteMailTemplate,

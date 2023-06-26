@@ -38,6 +38,7 @@ export function useServer({ port, name }: ServerProps) {
       }),
     );
     app.use(express.static('public'));
+    app.use('/uploads', express.static('uploads'));
     configureRoutes(app);
     app.use(errorMiddleware);
     initializeDataSource();
