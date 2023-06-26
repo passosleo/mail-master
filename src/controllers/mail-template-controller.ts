@@ -19,6 +19,24 @@ export function useMailTemplateController() {
     }
   }
 
+  async function getMailTemplateById(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const { templateId } = req.params;
+    try {
+      const result = await service.getMailTemplateById(templateId);
+
+      if (!result.success)
+        return res.status(StatusCodes.BAD_REQUEST).json(result);
+
+      return res.redirect(result.data.fileUrl);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async function createMailTemplate(
     req: Request,
     res: Response,
@@ -88,6 +106,7 @@ export function useMailTemplateController() {
 
   return {
     getMailTemplates,
+    getMailTemplateById,
     createMailTemplate,
     updateMailTemplate,
     deleteMailTemplate,

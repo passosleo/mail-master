@@ -17,9 +17,28 @@ export function useMailTemplateService() {
       success: true,
       data: templates.map((template) => ({
         ...template,
-        file: 'http://localhost:3000/uploads/templates/' + template.file,
+        fileUrl: 'http://localhost:3000/uploads/templates/' + template.file,
       })),
     };
+  }
+
+  async function getMailTemplateById(
+    templateId: string,
+  ): Promise<ServiceResult> {
+    const template = await mailTemplateRepository.findOneBy({ templateId });
+
+    return template
+      ? {
+          success: true,
+          data: {
+            ...template,
+            fileUrl: 'http://localhost:3000/uploads/templates/' + template.file,
+          },
+        }
+      : {
+          success: false,
+          error: 'Template not found',
+        };
   }
 
   async function createMailTemplate({
@@ -126,6 +145,7 @@ export function useMailTemplateService() {
 
   return {
     getMailTemplates,
+    getMailTemplateById,
     createMailTemplate,
     updateMailTemplate,
     deleteMailTemplate,

@@ -11,9 +11,12 @@ import {
 const router = express.Router();
 const controller = useMailTemplateController();
 
+router.get('/', controller.getMailTemplates);
+
 router.get(
-  '/',
-  controller.getMailTemplates,
+  '/:templateId',
+  validate({ schema: searchMailTemplateSchema, path: 'params' }),
+  controller.getMailTemplateById,
 );
 
 router.post(

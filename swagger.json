@@ -493,6 +493,59 @@
       }
     },
     "/mail-template/{templateId}": {
+      "get": {
+        "tags": ["Mail Template"],
+        "summary": "Get a mail template by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "templateId",
+            "description": "Template ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      },
       "delete": {
         "tags": ["Mail Template"],
         "summary": "Delete a mail template by ID",
