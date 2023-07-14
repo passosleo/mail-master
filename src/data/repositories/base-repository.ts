@@ -1,5 +1,10 @@
-import { DeepPartial, EntityTarget, FindOptionsWhere, ObjectLiteral } from 'typeorm';
-import { AppDataSource } from './data-source';
+import {
+  DeepPartial,
+  EntityTarget,
+  FindOptionsWhere,
+  ObjectLiteral,
+} from 'typeorm';
+import { AppDataSource } from '../data-source';
 
 export function useBaseRepository<T extends ObjectLiteral>({
   entity,

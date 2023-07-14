@@ -1,7 +1,8 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-import { useLogger } from '../plugin/logger-plugin';
-import { User } from '../entities/user';
+import { User } from './entities/user';
+import { useLogger } from '../plugins/logger-plugin';
+import { MailTemplate } from './entities/mail-template';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -12,7 +13,7 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: true,
-  entities: [User],
+  entities: [User, MailTemplate],
   subscribers: [],
   migrations: [],
 });

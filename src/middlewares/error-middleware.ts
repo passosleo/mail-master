@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { useLogger } from '../plugin/logger-plugin';
+import { useLogger } from '../plugins/logger-plugin';
+import { StatusCodes } from 'http-status-codes';
 
 export async function errorMiddleware(
   error: Error,
@@ -18,7 +19,8 @@ export async function errorMiddleware(
     error: error,
   });
 
-  res.status(500).json({
-    message: 'Internal server error',
+  res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    success: false,
+    error: 'Internal server error',
   });
 }

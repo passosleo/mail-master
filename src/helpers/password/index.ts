@@ -6,7 +6,7 @@ export function usePasswordHelper() {
     return bc.hash(password, salt);
   }
 
-  function validateHashedPassword(password: string, hashedPassword: string): boolean {
+  function validateHashedPassword(password: string, hashedPassword: string) {
     return bc.compare(password, hashedPassword);
   }
 
