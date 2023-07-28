@@ -1,5 +1,5 @@
 ## Mail Master API
-Mail template API made to handle, store, identify and provide mail templates. It was developed using some functional programming concepts instead of object-oriented.
+Mail template API made to handle, store, identify and provide mail HTML templates. It was developed using some functional programming concepts instead of object-oriented.
 
 ## Features
 * Authentication system
